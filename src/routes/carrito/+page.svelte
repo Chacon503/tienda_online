@@ -26,11 +26,9 @@
 				
 				{#each $cart.items as item (item.id)}
 					<div class="p-8 border-b border-gray-100 last:border-b-0 hover:bg-gray-50">
-						<div class="flex items-center space-x-6">
-							<img src={item.image} alt={item.name} class="w-20 h-20 object-cover rounded-lg shadow-md" />
+						<div class="flex items-center justify-between">
 							<div class="flex-1">
 								<h3 class="text-xl font-semibold mb-1">{item.name}</h3>
-								<p class="text-gray-600 mb-4">{item.description}</p>
 							</div>
 							<div class="text-right">
 								<div class="text-2xl font-bold text-gray-900 mb-2">${(item.price * item.quantity).toFixed(2)}</div>

@@ -63,14 +63,7 @@
 									<div class="text-sm text-gray-600">Cant: {item.quantity} x ${item.price}</div>
 								</div>
 								<div class="font-semibold">${(item.price * item.quantity).toFixed(2)}</div>
-							{/each}
-					</div>
-					
-					<div class="border-t pt-6 space-y-3">
-						<div class="flex justify-between text-lg font-semibold">
-							<span>Total:</span>
-							<span class="text-2xl text-green-600 font-bold">${$cart.total.toFixed(2)}</span>
-						</div>
+							</div>
 						<button class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 px-8 rounded-2xl text-xl font-bold hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1">
 							¡Realizar Pedido!
 						</button>

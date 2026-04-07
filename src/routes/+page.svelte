@@ -3,11 +3,11 @@
 	import type { Product } from '$lib/types';
 
 	const products: Product[] = [
-		{ id: 1, name: 'Camisa Personalizada Blanca', price: 29.99, image: '/images/camisa-blanca.jpg', description: 'Camisa 100% algodón con impresión personalizada de alta calidad. Perfecta para regalos únicos.' },
-		{ id: 2, name: 'Taza Cerámica Personalizada', price: 15.99, image: '/images/taza-personalizada.jpg', description: 'Taza de cerámica con capacidad 350ml y impresión duradera. Ideal para café o té.' },
-		{ id: 3, name: 'Gorra Embroider Personalizada', price: 24.99, image: '/images/gorra-personalizada.jpg', description: 'Gorra ajustable con bordado personalizado. Material transpirable y diseño único.' },
-		{ id: 4, name: 'Sudadera Hoodie Personalizada', price: 49.99, image: 'https://via.placeholder.com/300x300?text=Sudadera+Hoodie', description: 'Sudadera con capucha de felpa suave, impresión frontal y mangas opcionales.' },
-		{ id: 5, name: 'Funda iPhone Personalizada', price: 19.99, image: 'https://via.placeholder.com/300x300?text=Funda+iPhone', description: 'Funda protectora para iPhone con impresión full color resistente a rayones.' }
+		{ id: 1, name: 'Camisa Personalizada Blanca', price: 29.99 },
+		{ id: 2, name: 'Taza Cerámica Personalizada', price: 15.99 },
+		{ id: 3, name: 'Gorra Embroider Personalizada', price: 24.99 },
+		{ id: 4, name: 'Sudadera Hoodie Personalizada', price: 49.99 },
+		{ id: 5, name: 'Funda iPhone Personalizada', price: 19.99 }
 	];
 
 </script>
@@ -19,22 +19,16 @@
 		<p class="text-xl text-center mb-12 text-gray-600 max-w-2xl mx-auto">Descubre nuestros productos increíbles. ¡Agrega al carrito y compra ahora!</p>
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 			{#each products as product}
-				<div class="bg-white border border-gray-200 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 group">
-					<div class="aspect-square bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center p-8">
-						<img src={product.image} alt={product.name} class="w-32 h-32 object-cover rounded-lg shadow-lg group-hover:scale-110 transition-transform" />
-					</div>
-					<div class="p-6">
-						<h3 class="text-xl font-semibold mb-2">{product.name}</h3>
-						<p class="text-gray-600 mb-4 line-clamp-2">{product.description}</p>
-						<div class="flex items-center justify-between">
-							<div class="text-2xl font-bold text-blue-600">${product.price}</div>
-							<button 
-								onclick={() => cart.addItem(product)}
-								class="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition-all font-medium shadow-md hover:shadow-lg"
-							>
-								Agregar
-							</button>
-						</div>
+				<div class="bg-white border border-gray-200 rounded-xl shadow-md p-6 hover:shadow-lg transition-all duration-300">
+					<h3 class="text-xl font-semibold mb-4">{product.name}</h3>
+					<div class="flex items-center justify-between">
+						<div class="text-2xl font-bold text-blue-600">${product.price}</div>
+						<button 
+							onclick={() => cart.addItem(product)}
+							class="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition-all font-medium shadow-md hover:shadow-lg"
+						>
+							Agregar
+						</button>
 					</div>
 				</div>
 			{/each}
