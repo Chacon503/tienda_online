@@ -1,147 +1,240 @@
 <script lang="ts">
+	import { jsPDF } from 'jspdf';
 	import { cart } from '$lib/stores/cart';
+
+	let countries = [
+		{ name: 'Costa Rica', code: '+506' },
+		{ name: 'México', code: '+52' },
+		{ name: 'Colombia', code: '+57' },
+		{ name: 'Argentina', code: '+54' },
+		{ name: 'Chile', code: '+56' },
+		{ name: 'Estados Unidos', code: '+1' },
+		{ name: 'España', code: '+34' }
+	];
+
+	let formData = $state({
+		full_name: '',
+		email: '',
+		phone: '',
+		address: '',
+		city: '',
+		postal_code: '',
+		country: 'Costa Rica',
+		country_code: '+506',
+		payment_method: ''
+	});
+
+	let sinpeImage: File | null = null;
+	let loading = $state(false);
+
+	function updateCountryCode(countryName) {
+		const selected = countries.find(c => c.name === countryName);
+		if (selected) formData.country_code = selected.code;
+	}
+
+	function validateForm() {
+		const phoneValid = /^[0-9]{8,12}$/.test(formData.phone);
+
+		if (!phoneValid) {
+			alert('Número de teléfono inválido');
+			return false;
+		}
+
+		if (formData.payment_method === 'SINPE' && !sinpeImage) {
+			alert('Debes subir el comprobante SINPE');
+			return false;
+		}
+
+		return (
+			formData.full_name &&
+			formData.email &&
+			formData.phone &&
+			formData.address &&
+			formData.city &&
+			formData.postal_code &&
+			formData.payment_method
+		);
+	}
+
+	// ✅ PDF REAL
+	function downloadInvoice(orderNumber) {
+		const doc = new jsPDF();
+
+		let y = 10;
+
+		doc.setFontSize(16);
+		doc.text('FACTURA', 10, y);
+
+		y += 10;
+		doc.setFontSize(10);
+
+		doc.text(`Orden: ${orderNumber}`, 10, y);
+		y += 6;
+		doc.text(`Cliente: ${formData.full_name}`, 10, y);
+		y += 6;
+		doc.text(`Tel: ${formData.country_code}${formData.phone}`, 10, y);
+		y += 6;
+		doc.text(`País: ${formData.country}`, 10, y);
+		y += 6;
+		doc.text(`Pago: ${formData.payment_method}`, 10, y);
+
+		y += 10;
+		doc.text('-----------------------------', 10, y);
+
+		y += 6;
+
+		$cart.items.forEach(item => {
+			doc.text(
+				`${item.name} x${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`,
+				10,
+				y
+			);
+			y += 6;
+		});
+
+		y += 6;
+		doc.text('-----------------------------', 10, y);
+
+		y += 8;
+		doc.setFontSize(12);
+		doc.text(`TOTAL: $${$cart.total.toFixed(2)}`, 10, y);
+
+		doc.save(`factura_${orderNumber}.pdf`);
+	}
+
+	async function submitOrder() {
+		if (!validateForm()) return;
+
+		loading = true;
+
+		try {
+			const response = await fetch('/api/orders', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					...formData,
+					phone: formData.country_code + formData.phone,
+					items: $cart.items,
+					total_amount: $cart.total,
+					sinpe_image: sinpeImage ? sinpeImage.name : null
+				})
+			});
+
+			const result = await response.json();
+
+			if (!response.ok) {
+				console.error(result);
+				alert('Error: ' + (result.details || result.error));
+				return;
+			}
+
+			alert('Compra exitosa');
+
+			downloadInvoice(result.orderNumber);
+
+			cart.clearCart();
+			window.location.href = '/';
+
+		} catch (error) {
+			console.error(error);
+			alert('Error al procesar la compra');
+		} finally {
+			loading = false;
+		}
+	}
 </script>
 
 <section class="py-12 bg-gradient-to-b from-blue-50 to-indigo-100 min-h-screen">
-	<div class="container mx-auto px-4 max-w-4xl">
-		<h1 class="text-4xl font-bold text-center mb-16 text-gray-800">
+	<div class="max-w-4xl mx-auto px-4">
+
+		<h1 class="text-3xl font-bold mb-8 text-center">
 			Finalizar Compra
 		</h1>
 
-		{#if $cart.items.length === 0}
-			<div class="text-center py-20">
-				<h2 class="text-2xl font-semibold mb-4 text-gray-600">
-					No hay productos en el carrito
-				</h2>
-				<a
-					href="/productos"
-					class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700"
-				>
-					Continuar Comprando
-				</a>
-			</div>
-		{:else}
-			<div class="grid md:grid-cols-2 gap-12 items-start">
-				<!-- Formulario de Checkout -->
-				<div class="bg-white rounded-2xl shadow-2xl p-8">
-					<h2 class="text-2xl font-bold mb-8">
-						Información de Envío
-					</h2>
+		<div class="grid md:grid-cols-2 gap-8">
 
-					<form class="space-y-6">
-						<div>
-							<label class="block text-sm font-medium mb-2">
-								Nombre Completo
-							</label>
-							<input
-								type="text"
-								class="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-							/>
-						</div>
+			<!-- FORM -->
+			<div class="bg-white p-6 rounded-xl shadow">
 
-						<div>
-							<label class="block text-sm font-medium mb-2">
-								Email
-							</label>
-							<input
-								type="email"
-								class="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-							/>
-						</div>
+				<input placeholder="Nombre completo" bind:value={formData.full_name} class="input" />
+				<input type="email" placeholder="Email" bind:value={formData.email} class="input" />
 
-						<div class="grid md:grid-cols-2 gap-4">
-							<div>
-								<label class="block text-sm font-medium mb-2">
-									Dirección
-								</label>
-								<input
-									type="text"
-									class="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-								/>
-							</div>
+				<select bind:value={formData.country} onchange={(e) => updateCountryCode(e.target.value)} class="input">
+					{#each countries as c}
+						<option value={c.name}>{c.name}</option>
+					{/each}
+				</select>
 
-							<div>
-								<label class="block text-sm font-medium mb-2">
-									Ciudad
-								</label>
-								<input
-									type="text"
-									class="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-								/>
-							</div>
-						</div>
+				<!-- TELÉFONO -->
+				<div class="flex gap-2 items-center">
+					<input 
+						value={formData.country_code} 
+						readonly 
+						class="px-2 py-2 border rounded bg-gray-100 text-center text-sm"
+						style="width: 65px; flex-shrink: 0;"
+					/>
 
-						<div class="grid md:grid-cols-2 gap-4">
-							<div>
-								<label class="block text-sm font-medium mb-2">
-									Código Postal
-								</label>
-								<input
-									type="text"
-									class="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-								/>
-							</div>
-
-							<div>
-								<label class="block text-sm font-medium mb-2">
-									País
-								</label>
-								<select
-									class="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-								>
-									<option>Argentina</option>
-									<option>Otros países...</option>
-								</select>
-							</div>
-						</div>
-					</form>
+					<input 
+						type="tel"
+						placeholder="Teléfono"
+						bind:value={formData.phone}
+						class="flex-1 px-3 py-2 border rounded"
+						oninput={(e) => formData.phone = e.target.value.replace(/\D/g, '')}
+					/>
 				</div>
 
-				<!-- Resumen de Orden -->
-				<div class="bg-white rounded-2xl shadow-2xl p-8 sticky top-8">
-					<h2 class="text-2xl font-bold mb-8">
-						Resumen de Orden
-					</h2>
+				<input placeholder="Dirección" bind:value={formData.address} class="input" />
+				<input placeholder="Ciudad" bind:value={formData.city} class="input" />
+				<input placeholder="Código Postal" bind:value={formData.postal_code} class="input" />
 
-					<div class="space-y-4 mb-8">
-						{#each $cart.items as item}
-							<div class="flex justify-between py-2">
-								<div>
-									<div class="font-semibold">
-										{item.name}
-									</div>
-									<div class="text-sm text-gray-600">
-										Cant: {item.quantity} x ${item.price}
-									</div>
-								</div>
-								<div class="font-semibold">
-									${(item.price * item.quantity).toFixed(2)}
-								</div>
-							</div>
-						{/each}
+				<select bind:value={formData.payment_method} class="input">
+					<option value="">Método de pago</option>
+					<option>Efectivo</option>
+					<option>SINPE</option>
+					<option>Tarjeta</option>
+				</select>
+
+				{#if formData.payment_method === 'SINPE'}
+					<input type="file" accept="image/*" onchange={(e) => sinpeImage = e.target.files[0]} class="input" />
+				{/if}
+
+			</div>
+
+			<!-- RESUMEN -->
+			<div class="bg-white p-6 rounded-xl shadow">
+
+				{#each $cart.items as item}
+					<div class="flex justify-between mb-2">
+						<span>{item.name} x{item.quantity}</span>
+						<span>${(item.price * item.quantity).toFixed(2)}</span>
 					</div>
+				{/each}
 
-					<!-- Botones -->
-					<button
-						class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 px-8 rounded-2xl text-xl font-bold hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
-					>
-						¡Realizar Pedido!
-					</button>
+				<hr class="my-4"/>
 
-					<button
-						on:click={cart.clearCart}
-						class="w-full bg-gray-100 text-gray-700 py-3 px-6 rounded-xl font-semibold hover:bg-gray-200 transition-colors mt-4"
-					>
-						Cambiar Algo
-					</button>
+				<div class="flex justify-between font-bold text-lg">
+					<span>Total</span>
+					<span>${$cart.total.toFixed(2)}</span>
 				</div>
+
+				<button onclick={submitOrder} class="w-full mt-6 bg-green-600 text-white py-3 rounded">
+					{loading ? 'Procesando...' : 'Comprar'}
+				</button>
+
 			</div>
-		{/if}
+
+		</div>
 	</div>
 </section>
 
 <style>
-	button:not([class*="bg-"]):not([class*="text-"]) {
-		cursor: pointer;
+	.input {
+		width: 100%;
+		padding: 10px;
+		margin-bottom: 10px;
+		border: 1px solid #ddd;
+		border-radius: 6px;
 	}
 </style>

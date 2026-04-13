@@ -3,32 +3,37 @@
 	import type { Product } from '$lib/types';
 
 	const products: Product[] = [
-		{ id: 1, name: 'Camisa Personalizada Blanca', price: 29.99 },
-		{ id: 2, name: 'Taza Cerámica Personalizada', price: 15.99 },
-		{ id: 3, name: 'Gorra Embroider Personalizada', price: 24.99 },
-		{ id: 4, name: 'Sudadera Hoodie Personalizada', price: 49.99 },
-		{ id: 5, name: 'Funda iPhone Personalizada', price: 19.99 }
+		{ id: 1, name: 'Camisa', price: 29.99, image: '/images/camisa.png' },
+		{ id: 2, name: 'Taza Cerámica', price: 15.99, image: '/images/taza.png' },
+		{ id: 3, name: 'Gorra Embroider', price: 24.99, image: '/images/gorra.png' },
+		{ id: 4, name: 'Sudadera Hoodie', price: 49.99, image: '/images/sueter.png' },
+		{ id: 5, name: 'Funda iPhone', price: 19.99, image: '/images/funda (1).png' }
 	];
 
 </script>
 
 <section class="py-12">
-	<div class="container mx-auto px-4">
+	<div class="container mx-auto px-30">
 		<h1 class="text-4xl md:text-5xl font-bold text-center mb-12 text-gray-800 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">PIXEL &amp; TELAS</h1>
 		<p class="text-xl md:text-2xl text-center mb-12 text-gray-600 max-w-2xl mx-auto bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text">Impresiones con alma - Productos personalizados únicos</p>
 		<p class="text-xl text-center mb-12 text-gray-600 max-w-2xl mx-auto">Descubre nuestros productos increíbles. ¡Agrega al carrito y compra ahora!</p>
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 			{#each products as product}
-				<div class="bg-white border border-gray-200 rounded-xl shadow-md p-6 hover:shadow-lg transition-all duration-300">
-					<h3 class="text-xl font-semibold mb-4">{product.name}</h3>
-					<div class="flex items-center justify-between">
-						<div class="text-2xl font-bold text-blue-600">${product.price}</div>
-						<button 
-							onclick={() => cart.addItem(product)}
-							class="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition-all font-medium shadow-md hover:shadow-lg"
-						>
-							Agregar
-						</button>
+				<div class="bg-white border border-gray-100 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300">
+					<div class="w-full h-75 bg-gray-100 overflow-hidden">
+						<img src={product.image} alt={product.name} class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" />
+					</div>
+					<div class="p-6">
+						<h3 class="text-xl font-semibold mb-4">{product.name}</h3>
+						<div class="flex items-center justify-between">
+							<div class="text-2xl font-bold text-blue-600">${product.price}</div>
+							<button 
+								onclick={() => cart.addItem(product)}
+								class="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition-all font-medium shadow-md hover:shadow-lg"
+							>
+								Agregar
+							</button>
+						</div>
 					</div>
 				</div>
 			{/each}
@@ -39,7 +44,7 @@
 
 <!-- Sección Misión y Visión -->
 <section class="py-20 bg-gradient-to-b from-gray-50 to-white">
-	<div class="container mx-auto px-4">
+	<div class="container mx-auto px-30">
 		<div class="grid md:grid-cols-2 gap-16 items-center">
 			<div>
 				<h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-800">Nuestra <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Misión</span></h2>

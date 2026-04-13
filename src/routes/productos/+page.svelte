@@ -1,37 +1,85 @@
 <script lang="ts">
 	import { cart } from '$lib/stores/cart';
 	import type { Product } from '$lib/types';
+	import { page } from '$app/stores';
 
-	const products: Product[] = [
-		{ id: 1, name: 'Camisa Personalizada Blanca', price: 29.99 },
-		{ id: 2, name: 'Taza Cerámica Personalizada', price: 15.99 },
-		{ id: 3, name: 'Gorra Embroider Personalizada', price: 24.99 },
-		{ id: 4, name: 'Sudadera Hoodie Personalizada', price: 49.99 },
-		{ id: 5, name: 'Funda iPhone Personalizada', price: 19.99 },
-		{ id: 6, name: 'Botella Termica Personalizada', price: 34.99 },
-		{ id: 7, name: 'Cuaderno Personalizado', price: 12.99 },
-		{ id: 8, name: 'Mouse Pad Personalizado', price: 18.99 }
-	];
+	let products: Product[] = $state([]);
+	let loading = $state(true);
+
+	let searchTerm = $derived(
+		$page.url.searchParams.get('search')?.toLowerCase() || ''
+	);
+
+	async function loadProducts() {
+		try {
+			const res = await fetch('/api/products');
+			products = await res.json();
+		} catch (error) {
+			console.error(error);
+		} finally {
+			loading = false;
+		}
+	}
+
+	$effect(() => {
+		loadProducts();
+	});
+
+	let filteredProducts = $derived(
+		products.filter(product =>
+			product.name.toLowerCase().includes(searchTerm)
+		)
+	);
 </script>
 
 <section class="py-12">
-	<div class="container mx-auto px-4">
-		<h1 class="text-4xl font-bold text-center mb-12 text-gray-800">Todos los Productos</h1>
-		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-			{#each products as product}
-				<div class="bg-white border border-gray-200 rounded-lg shadow-md p-6 hover:shadow-lg transition-all duration-300">
-					<h3 class="text-xl font-semibold mb-4">{product.name}</h3>
-					<div class="flex items-center justify-between">
-						<div class="text-2xl font-bold text-emerald-600">${product.price}</div>
-						<button 
+	<div class="container mx-auto px-6">
+
+		<h1 class="text-3xl font-bold text-center mb-8">
+			Todos los Productos
+		</h1>
+
+		{#if loading}
+			<p class="text-center">Cargando...</p>
+
+		{:else if filteredProducts.length === 0}
+			<p class="text-center text-gray-500">
+				No se encontraron productos
+			</p>
+
+		{:else}
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+				{#each filteredProducts as product}
+					<div class="bg-white border rounded-lg shadow p-4">
+
+						<!-- IMAGEN CORREGIDA -->
+						<div class="w-full h-48 bg-gray-100 rounded overflow-hidden mb-4">
+							<img 
+								src={product.image_url || product.image || '/images/placeholder.png'} 
+								alt={product.name}
+								class="w-full h-full object-cover"
+								onerror={(e) => e.currentTarget.src = '/images/placeholder.png'}
+								loading="lazy"
+							/>
+						</div>
+
+						<h2 class="font-bold">{product.name}</h2>
+
+						<p class="text-green-600 font-semibold">
+							${product.price}
+						</p>
+
+						<button
 							onclick={() => cart.addItem(product)}
-							class="bg-emerald-600 text-white py-2 px-6 rounded-lg hover:bg-emerald-700 transition-all font-medium shadow-md hover:shadow-lg"
+							class="mt-4 w-full bg-green-600 text-white py-2 rounded hover:bg-green-700"
 						>
 							Agregar
 						</button>
+
 					</div>
-				</div>
-			{/each}
-		</div>
+				{/each}
+			</div>
+		{/if}
+
 	</div>
 </section>
