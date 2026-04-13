@@ -102,79 +102,112 @@
 	</main>
 
 	<!-- FOOTER -->
-	<footer class="bg-gray-800 text-gray-300 mt-12 pt-12">
-		<div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8 pb-8">
+	<footer class="bg-gray-800 text-gray-300 mt-12 pt-8 pb-4">
+	<div class="container mx-auto px-4 flex flex-col items-center">
 
-			<div>
-				<h4 class="text-white font-bold mb-4">Hacer compras</h4>
-				<ul class="space-y-2 text-sm">
-					<li><a href="/productos">Todos los Productos</a></li>
-					<li><a href="/">Ofertas</a></li>
-					<li><a href="/">Lo más vendido</a></li>
-				</ul>
+		<!-- REDES CENTRALES -->
+		<div class="text-center mb-6">
+			<h4 class="text-white font-bold mb-4">Síguenos</h4>
+
+			<div class="flex justify-center gap-10">
+
+				<!-- Facebook -->
+				<a 
+					href="https://www.facebook.com/share/1BH8LMTfNk/" 
+					target="_blank"
+					class="w-12 h-12 flex items-center justify-center rounded-full shadow-lg hover:scale-110 transition"
+					style="background-color: #1877F2;"
+				>
+					<!-- Facebook SVG -->
+					<svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+						<path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-3h2.5V9.5A3.5 3.5 0 0 1 14 6h2v3h-2c-.6 0-1 .4-1 1V12h3l-.5 3H13v7A10 10 0 0 0 22 12z"/>
+					</svg>
+				</a>
+
+				<!-- Instagram -->
+				<a 
+					href="https://www.instagram.com/eze.chacon.17" 
+					target="_blank"
+					class="w-12 h-12 flex items-center justify-center rounded-full shadow-lg hover:scale-110 transition"
+					style="background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);"
+				>
+					<!-- Instagram SVG -->
+					<svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+						<path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm10 2c1.7 0 3 1.3 3 3s-1.3 3-3 3-3-1.3-3-3 1.3-3 3-3zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10z"/>
+					</svg>
+				</a>
+
+				<!-- WhatsApp -->
+				<a 
+					href="https://wa.me/50672529150?text=Hola,%20quiero%20información" 
+					target="_blank"
+					class="w-12 h-12 flex items-center justify-center rounded-full shadow-lg hover:scale-110 transition"
+					style="background-color: #25D366;"
+				>
+					<!-- WhatsApp SVG -->
+					<svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+						<path d="M20.5 3.5A11.8 11.8 0 0 0 12 0C5.4 0 .1 5.3.1 11.9c0 2.1.6 4.1 1.7 5.9L0 24l6.3-1.7a12 12 0 0 0 5.7 1.4c6.6 0 12-5.3 12-11.9 0-3.2-1.3-6.2-3.5-8.3z"/>
+					</svg>
+				</a>
+
 			</div>
-
-			<div>
-				<h4 class="text-white font-bold mb-4">Atención al Cliente</h4>
-				<ul class="space-y-2 text-sm">
-					<li>Contacto</li>
-					<li>Devoluciones</li>
-					<li>Centro de Ayuda</li>
-				</ul>
-			</div>
-
-			<div>
-				<h4 class="text-white font-bold mb-4">Acerca de</h4>
-				<ul class="space-y-2 text-sm">
-					<li>Nuestra Misión</li>
-					<li>Experiencia</li>
-					<li>Blog</li>
-				</ul>
-			</div>
-
-			<!-- REDES PRO -->
-			<div>
-				<h4 class="text-white font-bold mb-4">Síguenos</h4>
-
-				<ul class="space-y-3 text-sm">
-
-					<li>
-						<a href="https://www.facebook.com/share/1BH8LMTfNk/" target="_blank"
-							class="flex items-center gap-3 hover:text-blue-400 transition">
-							📘 Facebook
-						</a>
-					</li>
-
-					<li>
-						<a href="https://www.instagram.com/eze.chacon.17" target="_blank"
-							class="flex items-center gap-3 hover:text-pink-400 transition">
-							📸 Instagram
-						</a>
-					</li>
-
-					<li>
-						<a href="https://wa.me/50672529150?text=Hola,%20quiero%20información" target="_blank"
-							class="flex items-center gap-3 hover:text-green-400 transition">
-							💬 WhatsApp
-						</a>
-					</li>
-
-				</ul>
-			</div>
-
 		</div>
+	</div>
 
-		<div class="border-t border-gray-700 py-4 text-center text-sm">
-			© 2026 PIXEL & TELAS
-		</div>
-	</footer>
+	<!-- BARRA INFERIOR MÁS SEPARADA -->
+	<div class="border-t border-gray-700 py-4 text-center text-xs flex justify-center gap-16">
+		<a href="https://www.facebook.com/share/1BH8LMTfNk/" target="_blank" class="hover:text-blue-400 transition">
+			Facebook
+		</a>
+
+		<a href="https://www.instagram.com/eze.chacon.17" target="_blank" class="hover:text-pink-400 transition">
+			Instagram
+		</a>
+
+		<a href="https://wa.me/50672529150?text=Hola,%20quiero%20información" target="_blank" class="hover:text-green-400 transition">
+			WhatsApp
+		</a>
+	</div>
+</footer>
 </div>
 
-<!-- BOTÓN FLOTANTE WHATSAPP -->
-<a 
-	href="https://wa.me/50672529150?text=Hola,%20quiero%20información"
-	target="_blank"
-	class="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-xl transition hover:scale-110 z-50"
->
-	💬
-</a>
+<!-- BOTONES FLOTANTES (UNO DEBAJO DEL OTRO) -->
+<div class="fixed bottom-6 right-6 flex flex-col gap-3 z-50">
+
+	<!-- Facebook -->
+	<a 
+		href="https://www.facebook.com/share/1BH8LMTfNk/" 
+		target="_blank"
+		class="w-12 h-12 flex items-center justify-center rounded-full shadow-lg hover:scale-110 transition"
+		style="background-color: #1877F2;"
+	>
+		<svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+			<path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-3h2.5V9.5A3.5 3.5 0 0 1 14 6h2v3h-2c-.6 0-1 .4-1 1V12h3l-.5 3H13v7A10 10 0 0 0 22 12z"/>
+		</svg>
+	</a>
+
+	<!-- Instagram -->
+	<a 
+		href="https://www.instagram.com/eze.chacon.17" 
+		target="_blank"
+		class="w-12 h-12 flex items-center justify-center rounded-full shadow-lg hover:scale-110 transition"
+		style="background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%);"
+	>
+		<svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+			<path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm10 2c1.7 0 3 1.3 3 3s-1.3 3-3 3-3-1.3-3-3 1.3-3 3-3zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10z"/>
+		</svg>
+	</a>
+
+	<!-- WhatsApp -->
+	<a 
+		href="https://wa.me/50672529150?text=Hola,%20quiero%20información" 
+		target="_blank"
+		class="w-12 h-12 flex items-center justify-center rounded-full shadow-lg hover:scale-110 transition"
+		style="background-color: #25D366;"
+	>
+		<svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+			<path d="M20.5 3.5A11.8 11.8 0 0 0 12 0C5.4 0 .1 5.3.1 11.9c0 2.1.6 4.1 1.7 5.9L0 24l6.3-1.7a12 12 0 0 0 5.7 1.4c6.6 0 12-5.3 12-11.9 0-3.2-1.3-6.2-3.5-8.3z"/>
+		</svg>
+	</a>
+
+</div>

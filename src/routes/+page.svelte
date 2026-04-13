@@ -49,8 +49,8 @@
 			<div>
 				<h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-800">Nuestra <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Misión</span></h2>
 				<p class="text-xl text-gray-600 leading-relaxed mb-8">
-					Transformar ideas en productos tangibles con impresiones de alta calidad que capturan la esencia de cada diseño. 
-					Brindamos soluciones personalizadas que conectan emocionalmente con tu audiencia.
+					Ser una marca reconocida que ofrezca productos personalizados de excelente calidad, 
+					y brindar un buen servicio a los clientes, cumpliendo con entregas. 
 				</p>
 				<div class="space-y-4 text-lg text-gray-700">
 					<div class="flex items-start space-x-3">
@@ -86,7 +86,8 @@
 		<div class="mt-20 pt-20 border-t-4 border-gradient-to-r from-blue-500 via-purple-500 to-emerald-500 rounded-2xl p-12 bg-white shadow-2xl">
 			<div class="text-center mb-12">
 				<h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-800">Nuestra <span class="bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">Visión</span></h2>
-				<p class="text-xl text-gray-600 max-w-3xl mx-auto">Ser el referente nacional en productos personalizados, combinando tecnología de punta con diseño creativo y servicio excepcional.</p>
+				<p class="text-xl text-gray-600 max-w-3xl mx-auto">Brindar soluciones creativas, utilizando tecnología, y diseños para ofrecer productos que cumplan con las expectativas de nuestros clientes. 
+					A futuro, se busca reconocimiento, y un crecimiento exponencial en cuanto a pedidos, también mejorar continuamente en los procesos, y la previa ampliación de nuestros servicios. .</p>
 			</div>
 			<div class="grid md:grid-cols-3 gap-8">
 				<div class="text-center p-8 hover:scale-105 transition-all duration-300">

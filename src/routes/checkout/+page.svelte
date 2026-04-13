@@ -190,16 +190,31 @@
 				<input placeholder="Código Postal" bind:value={formData.postal_code} class="input" />
 
 				<select bind:value={formData.payment_method} class="input">
-					<option value="">Método de pago</option>
-					<option>Efectivo</option>
-					<option>SINPE</option>
-					<option>Tarjeta</option>
-				</select>
+	<option value="">Método de pago</option>
+	<option value="Efectivo">Efectivo</option>
+	<option value="SINPE">SINPE</option>
+	<option value="Tarjeta">Tarjeta</option>
+</select>
 
-				{#if formData.payment_method === 'SINPE'}
-					<input type="file" accept="image/*" onchange={(e) => sinpeImage = e.target.files[0]} class="input" />
-				{/if}
+{#if formData.payment_method === 'SINPE'}
 
+	<!-- INFO SINPE -->
+	<div class="bg-green-50 border border-green-300 text-green-800 p-4 rounded-lg mt-3 text-sm">
+		<p class="font-semibold mb-1">Pago por SINPE Móvil</p>
+		<p><strong>Nombre:</strong> Roberto Ezequiel Chacón Rosales</p>
+		<p><strong>Teléfono:</strong> +506 7252 9150</p>
+		<p class="text-xs mt-2">Realiza el pago y sube el comprobante abajo, gracias por preferirnos.</p>
+	</div>
+
+	<!-- SUBIR COMPROBANTE -->
+	<input 
+		type="file" 
+		accept="image/*" 
+		onchange={(e) => sinpeImage = e.target.files[0]} 
+		class="input mt-3"
+	/>
+
+{/if}
 			</div>
 
 			<!-- RESUMEN -->
